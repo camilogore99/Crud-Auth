@@ -4,23 +4,16 @@ const path = require("path")
 // app contiene todo lo de expres, ( caracteristicas, metodos );
 const app = express();
 const PORT = 8000;
-let visitas = 0;
+
+// ========== CONFIGURACION EJS ========== //
+
+//1. Definiendo en donde se ubicará el directorio views
+app.set('views', path.join(__dirname, 'views')); 
+//2. Definiendo el motor que usaremos
+app.set('view engine', 'ejs');
+
+
 // ========== MIDDLEWARES  ========== //
-
-app.use(( request, response, next ) => {
-   console.log( "hola mundo" );
-   next();
-});
-
-app.use(( request, response, next ) => {
-   visitas++;
-   console.log( "visita no."+ visitas );
-   // if ( visitas === 5 ) {
-   //    return next( new Error("la pagina a alcanzado el limite de solicitudes ") );
-   // }
-   return next();
-});
-
 
 // ========== MIDDLEWARES INCORPORADO ( build-in ) ========== //
 
@@ -44,38 +37,81 @@ app.use( express.json());
 // Van a manejar los objetos request, response y una funcion llamada next()
 
 app.get("/", ( request, response, next ) => { 
-   let pathHome = path.join(__dirname, "public", "index.html")
-   response.sendFile( pathHome )
+   
+   response.render("pages/home", {title: "Inicio", message: "hola mundo con EJS"})
 });
 
-app.get("/contacto", ( request, response, next ) => {
-   response.send('HelLo desde la pagina contacto')
-});
-
-app.get("/productos", ( request, response, next ) => {
-   response.send('HelLo desde la pagina productos')
-});
-
-app.get("/tienda", ( request, response, next ) => {
-   response.redirect("/productos")
-});
-
-app.post("/registro", ( request, response ) => {
-
-   // ===== obtener los datos que me envia el cliente ===== //
-   const user = request.body;
-   console.log( request.headers );
-   console.log(user);
-   response.send("se han recibido los datos")
-} )
-
+app.get("/tareas", ( request, response, next ) => { 
+   let taskArray = [
+      {
+      "id": 1,
+      "title": "Yellow mongoose",
+      "description": "Removal of Infusion Device from GU Tract, Via Opening"
+      }, 
+      {
+      "id": 2,
+      "title": "Black vulture",
+      "description": "Excision of Splenic Vein, Percutaneous Approach, Diagnostic"
+      }, {
+      "id": 3,
+      "title": "Crow, house",
+      "description": "Bypass 3 Cor Art from Thor Art w Zooplastic, Perc Endo"
+      }, {
+      "id": 4,
+      "title": "Macaw, green-winged",
+      "description": "Bypass R Kidney Pelvis to R Ureter w Synth Sub, Perc Endo"
+      }, {
+      "id": 5,
+      "title": "Brocket, brown",
+      "description": "Resection of Left Diaphragm, Open Approach"
+      }, {
+      "id": 6,
+      "title": "Lourie, grey",
+      "description": "Drainage of Face Artery with Drainage Device, Perc Approach"
+      }, {
+      "id": 7,
+      "title": "Asian elephant",
+      "description": "Measurement of POC, Cardiac Electr Activity, Extern Approach"
+      }, {
+      "id": 8,
+      "title": "Nuthatch, red-breasted",
+      "description": "Removal of Autol Sub from Occip Jt, Perc Endo Approach"
+      }, {
+      "id": 9,
+      "title": "Hoary marmot",
+      "description": "Dilate R Com Iliac Art, Bifurc, w 3 Drug-elut, Open"
+      }, {
+      "id": 10,
+      "title": "Grison",
+      "description": "Dilation of L Innom Vein with Intralum Dev, Perc Approach"
+      }, {
+      "id": 11,
+      "title": "Steenbuck",
+      "description": "Release Lumbosacral Joint, Percutaneous Approach"
+      }, {
+      "id": 12,
+      "title": "Chilean flamingo",
+      "description": "Revision of Drain Dev in L Sternoclav Jt, Extern Approach"
+      }, {
+      "id": 13,
+      "title": "Sugar glider",
+      "description": "Drainage of Left Adrenal Gland, Perc Endo Approach, Diagn"
+      }, {
+      "id": 14,
+      "title": "Mongoose, yellow",
+      "description": "Introduction of Radioact Subst into Eye, Perc Approach"
+      }, {
+      "id": 15,
+      "title": "Waxbill, black-cheeked",
+      "description": "Extirpation of Matter from Hepatic Artery, Open Approach"
+      }];
+   response.render("pages/tasks", {title: "Tareas", message: "Lista de tareas", items: taskArray})
+} );
 
 
 app.use(( request, response, next ) => {
-
    let pathNotFound = path.join(__dirname, "public", "404.html")
    response.status(404).sendFile( pathNotFound )
-
 });
 
 // ========== MIDDLEWARE PARA EL MANEJO DE ERRORES ========== //  
