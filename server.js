@@ -1,9 +1,13 @@
 
 const express = require("express");
-const path = require("path")
+const path = require("path");
+const taskArray = require('./task.json');
+const {users} = require("./models");
+
 // app contiene todo lo de expres, ( caracteristicas, metodos );
 const app = express();
 const PORT = 8000;
+
 
 // ========== CONFIGURACION EJS ========== //
 
@@ -21,106 +25,64 @@ app.set('view engine', 'ejs');
 app.use( express.static(path.join(__dirname, "public")));
 
 // Permite procesar los datos enviados por el cliente atraves de x-www-form-urlencoded
-app.use( express.urlencoded());
+app.use( express.urlencoded({extended: true}));
 
 // Permite procesar los datos enviados por el cliente atraves de application/json
 app.use( express.json());
 
-
-
 // ========== MIDDLEWARES DE APLICACION ========== //
-
-// .use() sirve para atender cualquier tipo de peticion ( comodin )
-// app.use()
 
 // Middleware de aplicacion trabaja con los metodos HTTP( GET,POST,PUT,DELETE )
 // Van a manejar los objetos request, response y una funcion llamada next()
 
-app.get("/", ( request, response, next ) => { 
-   
-   response.render("pages/home", {title: "Inicio", message: "hola mundo con EJS"})
+app.get("/", ( request, response,) => { 
+   response.render("pages/home", {title: "Inicio"})
 });
 
-app.get("/tareas", ( request, response, next ) => { 
-   let taskArray = [
-      {
-      "id": 1,
-      "title": "Yellow mongoose",
-      "description": "Removal of Infusion Device from GU Tract, Via Opening"
-      }, 
-      {
-      "id": 2,
-      "title": "Black vulture",
-      "description": "Excision of Splenic Vein, Percutaneous Approach, Diagnostic"
-      }, {
-      "id": 3,
-      "title": "Crow, house",
-      "description": "Bypass 3 Cor Art from Thor Art w Zooplastic, Perc Endo"
-      }, {
-      "id": 4,
-      "title": "Macaw, green-winged",
-      "description": "Bypass R Kidney Pelvis to R Ureter w Synth Sub, Perc Endo"
-      }, {
-      "id": 5,
-      "title": "Brocket, brown",
-      "description": "Resection of Left Diaphragm, Open Approach"
-      }, {
-      "id": 6,
-      "title": "Lourie, grey",
-      "description": "Drainage of Face Artery with Drainage Device, Perc Approach"
-      }, {
-      "id": 7,
-      "title": "Asian elephant",
-      "description": "Measurement of POC, Cardiac Electr Activity, Extern Approach"
-      }, {
-      "id": 8,
-      "title": "Nuthatch, red-breasted",
-      "description": "Removal of Autol Sub from Occip Jt, Perc Endo Approach"
-      }, {
-      "id": 9,
-      "title": "Hoary marmot",
-      "description": "Dilate R Com Iliac Art, Bifurc, w 3 Drug-elut, Open"
-      }, {
-      "id": 10,
-      "title": "Grison",
-      "description": "Dilation of L Innom Vein with Intralum Dev, Perc Approach"
-      }, {
-      "id": 11,
-      "title": "Steenbuck",
-      "description": "Release Lumbosacral Joint, Percutaneous Approach"
-      }, {
-      "id": 12,
-      "title": "Chilean flamingo",
-      "description": "Revision of Drain Dev in L Sternoclav Jt, Extern Approach"
-      }, {
-      "id": 13,
-      "title": "Sugar glider",
-      "description": "Drainage of Left Adrenal Gland, Perc Endo Approach, Diagn"
-      }, {
-      "id": 14,
-      "title": "Mongoose, yellow",
-      "description": "Introduction of Radioact Subst into Eye, Perc Approach"
-      }, {
-      "id": 15,
-      "title": "Waxbill, black-cheeked",
-      "description": "Extirpation of Matter from Hepatic Artery, Open Approach"
-      }];
-   response.render("pages/tasks", {title: "Tareas", message: "Lista de tareas", items: taskArray})
-} );
+app.get("/tareas", ( request, response ) => { 
+   response.render("pages/tasks", {
+      title: "Tareas",
+      message: "Lista de tareas",
+      items: taskArray
+   });
+});
 
+app.get("/registro", (request, response ) => {
+   response.render("pages/register", {title: 'registro'});
+});
 
-app.use(( request, response, next ) => {
+app.get("/login",( request, response ) => {
+   response.render("pages/logIn",{title: "iniciar session"})
+})
+
+app.get( "/categorias", ( request, response ) => { 
+   response.render("pages/categories",{title:'categorias'})  
+});
+
+app.post("/registro", async(request, response,next ) => {
+   // Se obtienen los datos del registro mediante el request.body
+   let { firstname, lastname, email, password } = request.body;
+   try{
+      // el metodo users.create es que se encarga de crear los datos en la base de datos 
+      await users.create({ firstname, lastname, email, password })
+      response.redirect("/categorias")
+   }catch(error){
+      next(error);
+   };
+});
+
+app.use(( request, response ) => {
    let pathNotFound = path.join(__dirname, "public", "404.html")
    response.status(404).sendFile( pathNotFound )
 });
 
 // ========== MIDDLEWARE PARA EL MANEJO DE ERRORES ========== //  
 
-app.use((error, request, response, next) => {
-   console.log(error.message);
-   response.status(404).send(error.message)
-})
+app.use((error, request, response ) => {
+   const errors = require('./utils/errorMessage');
+   response.status(404).send(errors[error.name]);
+});
 
 app.listen(PORT, () => {
-   console.log( `servidor escuchando sobre el puerto ${PORT}` );
+   console.log( `puerto ${PORT}` );
 });

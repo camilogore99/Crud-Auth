@@ -1,0 +1,30 @@
+<%- include('../template/head') -%>
+   <main>
+      <%- include('../template/sidebar') -%>
+         <div class="d-flex p-3 main-container">
+            <div class="container">
+               <div class="row">
+                  <div class="d-title">
+                     <h2>Editar Categoría</h2>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-12 new-register">
+                     <form action="/" method="POST">
+                        <div class="mb-3">
+                           <label for="name">ID</label>
+                           <input class="form-control" type="text" value="1" disabled />
+                        </div>
+                        <div class="mb-3">
+                           <label for="name">Nombre</label>
+                           <input id="name" class="form-control" type="text" name="name" value="Trabajo" required />
+                        </div>
+                        <button class="btn btn-primary" type="submit">
+                           Guardar
+                        </button>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+   </main>

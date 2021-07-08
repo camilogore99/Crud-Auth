@@ -1,0 +1,33 @@
+<%- include('../template/head') -%>
+   <%- include('../template/nav') -%>
+      <div class="bg-register ">
+         <div class="container ">
+            <div class="row">
+               <h2 class="text-center">Registro de usuarios</h2>
+            </div>
+            <div class="row justify-content-center">
+               <div class="col-6  reg-form-area">
+                  <form action="/registro" method="POST">
+                     <div class="mb-3">
+                        <label for="firstname">Nombre</label>
+                        <input class="form-control" type="text" name="firstname">
+                     </div>
+                     <div class="mb-3">
+                        <label for="lastname">Appelido</label>
+                        <input class="form-control" type="text" name="lastname">
+                     </div>
+                     <div class="mb-3">
+                        <label for="email">Email</label>
+                        <input class="form-control" type="email" name="email">
+                     </div>
+                     <div class="mb-3">
+                        <label for="password">Contraseña</label>
+                        <input class="form-control" type="password" name="password">
+                     </div>
+                     <button type="submit" class="btn btn-primary">Enviar</button>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+      <%- include('../template/footer') -%>
