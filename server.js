@@ -2,20 +2,43 @@
 const express = require("express");
 const path = require("path");
 const taskArray = require('./task.json');
-const {users} = require("./models");
+const {users, Sequelize} = require("./models");
 
-// app contiene todo lo de expres, ( caracteristicas, metodos );
+// importacion de la estrategia para passport //
+const passport = require("passport");
+// importacion para guardar la sesion //
+const session = require("express-session");
+const sequelizeStore = require("connect-session-sequelize")(session.Store)
+require("./config/passport");
+
+// app contiene todo lo de express, ( caracteristicas, metodos );
 const app = express();
 const PORT = 8000;
 
+let { sequelize } = require("./models")
 
 // ========== CONFIGURACION EJS ========== //
 
 //1. Definiendo en donde se ubicará el directorio views
 app.set('views', path.join(__dirname, 'views')); 
+
 //2. Definiendo el motor que usaremos
 app.set('view engine', 'ejs');
 
+// asi guardamos la session en la memoria del servidor  
+app.use( session({
+   secret: "academlo secret",
+   resave: false,
+   saveUninitialized: true,
+   store: new sequelizeStore({
+      expiration: 1 * 60 * 60 * 1000,
+      db: sequelize
+   })
+}));
+
+// Middelware de terceros //
+app.use(passport.initialize()); // Para poder utilizar el metodo de autenticacion passport
+app.use(passport.session()); // Para habilitar las sesion con passport
 
 // ========== MIDDLEWARES  ========== //
 
@@ -53,10 +76,29 @@ app.get("/registro", (request, response ) => {
 
 app.get("/login",( request, response ) => {
    response.render("pages/logIn",{title: "iniciar session"})
-})
+});
 
-app.get( "/categorias", ( request, response ) => { 
-   response.render("pages/categories",{title:'categorias'})  
+app.post("/login", passport.authenticate("local", {
+   failureRedirect: '/login',
+   successRedirect: '/categorias'
+}), (error, req, resp, next) => {
+   if (error) return next(error)
+});
+
+app.get( "/categorias", ( request, response ) => {
+   // request.isAuthenticated() nos va ayudar a saber si el usuario esta autenticado 
+   if ( request.isAuthenticated() ) {
+      let fullNmae = `${request.user.firstname} ${request.user.lastname}`
+      return response.render("pages/categories",{title:'categorias', username: fullNmae})  
+   }
+   return response.redirect("/login")
+});
+
+app.get( "/logout" ,( request, response ) => {
+   // request.logOut() nos saca de la sesion 
+   request.logOut();
+   response.redirect("/login")
+
 });
 
 app.post("/registro", async(request, response,next ) => {
@@ -65,7 +107,7 @@ app.post("/registro", async(request, response,next ) => {
    try{
       // el metodo users.create es que se encarga de crear los datos en la base de datos 
       await users.create({ firstname, lastname, email, password })
-      response.redirect("/categorias")
+      response.redirect("/registro")
    }catch(error){
       next(error);
    };
