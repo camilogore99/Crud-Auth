@@ -5,12 +5,12 @@
             <div class="container">
                <div class="row">
                   <div class="d-title">
-                     <h2>Editar Categoría</h2>
+                     <h2>Editar Estado</h2>
                   </div>
                </div>
                <div class="row">
                   <div class="col-12 new-register">
-                     <form action="/categorias/editar/<%= id %>" method="POST">
+                     <form action="/estatus/editar/<%= id %>" method="POST">
                         <div class="mb-3">
                            <label for="name">ID</label>
                            <input class="form-control" type="text" value="<%= id %>" disabled />
@@ -20,7 +20,7 @@
                            <input id="name" class="form-control" type="text" name="name" value="<%= name %>" required />
                         </div>
                         <button class="btn btn-primary" type="submit">
-                           Guardar
+                           Actualizar
                         </button>
                      </form>
                   </div>

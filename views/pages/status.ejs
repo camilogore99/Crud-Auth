@@ -5,12 +5,12 @@
             <div class="container">
                <div class="row">
                   <div class="d-title">
-                     <h2>Nueva Categoría</h2>
+                     <h2>Nuevo Estado</h2>
                   </div>
                </div>
                <div class="row">
                   <div class="col-12 new-register">
-                     <form action="/categorias" method="POST">
+                     <form action="/estatus" method="POST">
                         <div class="mb-3">
                            <label for="name">Nombre</label>
                            <input id="name" class="form-control" type="text" name="name" required />
@@ -23,7 +23,7 @@
                </div>
                <div class="row">
                   <div class="d-title mt-4">
-                     <h2>Categorías</h2>
+                     <h2>Estados</h2>
                   </div>
                </div>
                <div class="row table-container">
@@ -35,29 +35,26 @@
                            <th scope="col">Acciones</th>
                         </tr>
                      </thead>
-                     <tbody>
-                        <!-- Inicio de la fila  -->
-                        <% categories.forEach( (category,i)=> { %>
-                           <tr>
-                              <th scope="row">
-                                 <%= i+1 %>
-                              </th>
-                              <td>
-                                 <%= category.name %>
-                              </td>
-                              <td>
-                                 <a href="/categorias/editar/<%= category.id %>" class="btn btn-outline-warning">
-                                    <i class="bi bi-pencil"></i>
-                                 </a>
+                     <% status.forEach( (status,i)=> { %>
+                        <tr>
+                           <th scope="row">
+                              <%= i+1 %>
+                           </th>
+                           <td>
+                              <%= status.status_name %>
+                           </td>
+                           <td>
+                              <a href="/estatus/editar/<%= status.id %>" class="btn btn-outline-warning">
+                                 <i class="bi bi-pencil"></i>
+                              </a>
 
-                                 <a href="/categorias/borrar/<%= category.id %>" class="btn btn-outline-danger">
-                                    <i class="bi bi-trash"></i>
-                                 </a>
-                              </td>
-                           </tr>
-                           <% }); %>
-                              <!-- Fin de la fila  -->
-                     </tbody>
+                              <a href="/estatus/borrar/<%= status.id %>" class="btn btn-outline-danger">
+                                 <i class="bi bi-trash"></i>
+                              </a>
+                           </td>
+                        </tr>
+                        <% }); %>
+                           </tbody>
                   </table>
                </div>
             </div>
