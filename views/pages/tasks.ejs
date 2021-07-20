@@ -1,16 +1,109 @@
 <%- include('../template/head') -%>
+   <main>
+      <%- include('../template/sidebar') -%>
+         <div class="d-flex p-3 main-container">
+            <div class="container">
+               <div class="row">
+                  <div class="d-title">
+                     <h2>Nueva Tarea</h2>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-12 new-register">
+                     <form action="/tareas" method="POST">
+                        <div class="mb-3">
+                           <label for="title">Titulo</label>
+                           <input id="title" class="form-control" type="text" name="title" required />
+                        </div>
+                        <div class="mb-3">
+                           <label for="description">Descripcion</label>
+                           <input id="description" class="form-control" type="text" name="description" required />
+                        </div>
+                        <div class="mb-3">
+                           <label for="categories">Categoria</label>
+                           <select name="categories" id="categories">
+                              <!-- Inicio de la fila  -->
+                              <% categories.map( (category)=> { %>
+                                 <option value=<%=category.id%>>
+                                    <%= category.name%>
+                                 </option>
+                                 <% }); %>
+                           </select>
+                        </div>
+                        <div class="mb-3">
+                           <label for="state">Estado</label>
+                           <select name="state" id="state">
+                              <!-- Inicio de la fila  -->
+                              <% status.map( (statuses)=> { %>
+                                 <option value=<%=statuses.id%>>
+                                    <%= statuses.status_name%>
+                                 </option>
+                                 <% }); %>
+                           </select>
+                        </div>
+                        <button class="btn btn-primary" type="submit">
+                           Crear Tarea
+                        </button>
+                     </form>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="d-title mt-4">
+                     <h2>Tareas</h2>
+                  </div>
+               </div>
+               <div class="row table-container">
+                  <table class="table table-striped">
+                     <thead>
+                        <tr>
+                           <th scope="col">#</th>
+                           <th scope="col">titulo</th>
+                           <th scope="col">Descripcion</th>
+                           <th scope="col">Categoria</th>
+                           <th scope="col">Estado</th>
+                           <th scope="col">Completada</th>
+                           <th scope="col">Acciones</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <!-- Inicio de la fila  -->
+                        <% task.forEach( (tasks, i)=> { %>
+                           <tr>
+                              <th scope="row">
+                                 <%= i+1 %>
+                              </th>
+                              <td>
+                                 <%= tasks.title %>
+                              </td>
+                              <td>
+                                 <%= tasks.description %>
+                              </td>
 
-   <div>
-      <%= message %>
-   </div>
-   <div>
-      <ul>
-         <% items.forEach( task=> { %>
-            <li>
-               <%= task.title %>
-            </li>
-            <% }); %>
-      </ul>
-   </div>
+                              <td>
+                                 <%= arrCat[i] %>
+                              </td>
+                              <td>
+                                 <%= arrStatus[i] %>
+                              </td>
+                              <td>
+                                 <%= tasks.completed %>
+                              </td>
+                              <td>
+                                 <a href="/task/editar/<%= tasks.id %>" class="btn btn-outline-warning">
+                                    <i class="bi bi-pencil"></i>
+                                 </a>
 
-   <%- include('../template/footer') -%>
+                                 <a href="/task/borrar/<%= tasks.id %>" class="btn btn-outline-danger">
+                                    <i class="bi bi-trash"></i>
+                                 </a>
+                              </td>
+                           </tr>
+                           <% }); %>
+                              <!-- Fin de la fila  -->
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+   </main>
+   <%- include('../template/footer-auth') -%>

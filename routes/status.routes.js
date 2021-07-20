@@ -8,6 +8,6 @@ statusRouter.get( "/estatus", protectRoute, statusContreller.renderStatus )
 statusRouter.post( "/estatus", protectRoute, statusContreller.createdStatusController );
 statusRouter.get( "/estatus/editar/:id", protectRoute, statusContreller.renderEditStatus );
 statusRouter.post( "/estatus/editar/:id", protectRoute, statusContreller.update );
-statusRouter.get( "/estatus/borrar/:id", protectRoute, statusContreller.update );
+statusRouter.get( "/estatus/borrar/:id", protectRoute, statusContreller.deleteSta );
 
 module.exports = statusRouter;

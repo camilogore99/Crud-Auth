@@ -11,6 +11,7 @@ const authRouter = require('./routes/auth.routes');
 const catRouter = require('./routes/category.routes');
 const userRouter = require('./routes/user.route');
 const statusRouter = require('./routes/status.routes');
+const taskRoutes = require('./routes/task.routes');
 
 require("./config/passport");
 
@@ -40,7 +41,7 @@ const storage = multer.diskStorage({
 const upload = multer({
    storage
 });
-
+app.use( express.json() )
 app.use( express.urlencoded({extended: true}));
 
 app.use( express.static(path.join(__dirname, "public")));
@@ -68,8 +69,6 @@ app.get("/", ( request, response,) => {
 app.post( "/upload-image", upload.single('image'), (req,res) => {
    const ext = req.file.originalname.split('.').pop();
    req.file.filename += ext;
-
-
    res.send("se ha subido el archivo")
 });
 
@@ -77,5 +76,6 @@ app.use( authRouter );
 app.use( catRouter );
 app.use( userRouter );
 app.use( statusRouter );
+app.use( taskRoutes );
 
 module.exports = app;

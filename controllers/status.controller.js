@@ -1,4 +1,10 @@
-const { createdStatus,getStatusByUser,statusByiD,updateStatus,deleteStatus } = require("../services/status.service");
+const { 
+   createdStatus,
+   getStatusByUser,
+   statusByiD,
+   updateStatus,
+   deleteStatus
+} = require("../services/status.service");
 
 
 const renderEditStatus = async( req, res ) => {
@@ -54,12 +60,21 @@ const update = async(req, res) => {
       throw new Error(error);
    }
 }
-
+const deleteSta = async(req, res) => {
+   try {
+      let statusId = req.params.id;
+      await deleteStatus(statusId);
+      return res.redirect('/estatus')
+   } catch (error) {
+      throw new Error(error);
+   }
+} 
 
 
 module.exports = {
    renderStatus,
    renderEditStatus,
    createdStatusController,
-   update
+   update,
+   deleteSta
 }

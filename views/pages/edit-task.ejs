@@ -1,0 +1,47 @@
+<%- include('../template/head') -%>
+   <main>
+      <%- include('../template/sidebar') -%>
+         <div class="d-flex p-3 main-container">
+            <div class="container">
+               <div class="row">
+                  <div class="d-title">
+                     <h2>Editar Tarea</h2>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-12 new-register">
+                     <form action="/task/editar/<%=id%>" method="POST">
+                        <div class="mb-3">
+                           <label for="name">ID</label>
+                           <input class="form-control" type="text" value="<%= id %>" disabled />
+                        </div>
+                        <div class="mb-3">
+                           <label for="name">Titulo</label>
+                           <input id="name" class="form-control" type="text" name="name" value="<%=titleTask  %>"
+                              required />
+                        </div>
+                        <div class="mb-3">
+                           <label for="name">Descripcion</label>
+                           <input id="name" class="form-control" type="text" name="name" value="<%=description %>"
+                              required />
+                        </div>
+                        <div class="mb-3">
+                           <label for="name">Categoría</label>
+                           <input id="name" class="form-control" type="text" name="name" value="<%= category %>"
+                              required />
+                        </div>
+                        <div class="mb-3">
+                           <label for="name">Status</label>
+                           <input id="name" class="form-control" type="text" name="name" value="<%= status %>"
+                              required />
+                        </div>
+                        <button class="btn btn-primary" type="submit">
+                           Actualizar
+                        </button>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+   </main>
+   <%- include('../template/footer-auth') -%>

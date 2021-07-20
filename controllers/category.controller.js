@@ -46,11 +46,11 @@ const deleteCat = async(req, res, next) => {
 };
 
 const renderEdit = async( request, response, next ) => {
-   let { firstname, lastname } = request.user;
-   let {id} = request.params;
    try {
+      let { firstname, lastname } = request.user;
+      let {id} = request.params;
       let fullNmae = `${firstname} ${lastname}`;
-      let category = await categoryById(id)
+      let category = await categoryById(id);
       return response.render("pages/edit-category", { 
          id,
          name: category.name,

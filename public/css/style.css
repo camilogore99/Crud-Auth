@@ -19,8 +19,15 @@ main {
   overflow-x: auto;
   overflow-y: hidden;
 }
-
+.btn {
+  border-radius: 30px;
+}
+.background-web-taskit {
+  background-image: url("../assets/img/background-web_task-it.jpg");
+  height: 100vh;
+}
 .bg-register {
+  height: 85vh;
   background: url("../assets/img/bg-paper.jpg.jpg");
   padding: 20px 0px;
 }
@@ -30,6 +37,7 @@ main {
 }
 
 .reg-form-area {
+  height: 50vh;
   background-color: #fff;
   padding: 20px;
   border-radius: 5px;

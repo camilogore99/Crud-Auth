@@ -57,10 +57,46 @@ passport.use( new googleStrategy({
 }));
 
 
-// SerializeUser firma los datos del usuario  
-passport.serializeUser( ( profile, done ) => {
-   // Guarda los datos para utilizarlos despues como sesion
-   return done( null, profile);
+// // SerializeUser firma los datos del usuario  
+// passport.serializeUser( async( profile, done ) => {
+//    // Guarda los datos para utilizarlos despues como sesion
+//    return done( null, profile);
+// });
+//Serialización
+passport.serializeUser( async(profile, done) => {
+    //Google y Facebook
+    if (profile.provider) {
+        //Vamos a obtener los datos del usuario a partir del ID
+        let email = profile._json.email;
+        //1. Comprobar si el correo obtenido ya está registrado en nuestro sistema
+        //2. Si no existe... -> crear una cuenta con los datos que recibo del proveedor
+        //3. Si existe... -> vincular la cuenta local con la cuenta del proveedor
+        let user = await checkUserExist(email);
+        let providerId = profile.id;
+        let firstname = profile.provider === "google" ? profile.given_name : profile.name.givenName;
+        let lastname = profile.provider === "google" ? profile.family_name : profile.name.familyName;
+        let userObj = {
+            firstname,
+            lastname,
+            email,
+            password: randPasswd(),
+        };
+        if (user) {
+            let userId = user.id;
+            //Ligamos la cuenta local con la del proveedor
+            await linkUserProvider(providerId, userId, profile.provider);
+            return done(null, user);
+        } else {
+            //Creamos la cuenta local para el proveedor
+            let newUserObj = await newUser(userObj);
+            let userId = newUserObj.id;
+            //Ligamos la cuenta local con la del proveedor
+            await linkUserProvider( providerId, userId, profile.provider);
+            return done(null, newUserObj);
+        }
+    }
+    //Firmar los datos del usuario
+    return done(null, profile);
 });
 
 passport.deserializeUser( async( profile,done ) => {

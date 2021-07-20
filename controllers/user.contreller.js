@@ -6,7 +6,6 @@ const getAll = async(req, res, next) => {
       let users = await getUsers();
       console.log(res.json(users));
       res.json(users);
-      
    } catch (error) {
       next(error)
    }
