@@ -5,7 +5,8 @@ const controllerTask = require('../controllers/tasks.controller');
 
 taskRoutes.get("/tareas",protectRoute, controllerTask.renderTask );
 taskRoutes.post("/tareas",protectRoute, controllerTask.createTask );
-taskRoutes.get("/task/editar/:id",protectRoute,controllerTask.renderEditTask)
+taskRoutes.get("/task/editar/:id",protectRoute,controllerTask.renderEditTask);
+taskRoutes.post("/task/editar/:id",protectRoute,controllerTask.update);
 // taskRoutes.get("task/editar",protectRoute,controllerTask)
 
 module.exports = taskRoutes;

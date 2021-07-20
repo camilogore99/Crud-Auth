@@ -37,9 +37,25 @@ const getTaskById = async(id) => {
    }
 }
 
+const updateTask = async( {idTask, title, description, category, status } ) => {
+   try {
+      let task = await Task.update(
+         { title: title },
+         { description: description },
+         { category_id: category },
+         { status_id: status },
+         { where: { id: idTask }}
+      );
+      return task;
+   } catch (error) {
+      throw new Error(error)
+   }
+}
+
 
 module.exports = {
    createdTask,
    getTaskByUser,
-   getTaskById
+   getTaskById,
+   updateTask
 }

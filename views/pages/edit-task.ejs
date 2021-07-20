@@ -26,14 +26,26 @@
                               required />
                         </div>
                         <div class="mb-3">
-                           <label for="name">Categoría</label>
-                           <input id="name" class="form-control" type="text" name="name" value="<%= category %>"
-                              required />
+                           <label for="categories">Categoria</label>
+                           <select name="categories" id="categories">
+                              <!-- Inicio de la fila  -->
+                              <% categories.map( (category)=> { %>
+                                 <option value=<%=category.id%>>
+                                    <%= category.name%>
+                                 </option>
+                                 <% }); %>
+                           </select>
                         </div>
                         <div class="mb-3">
-                           <label for="name">Status</label>
-                           <input id="name" class="form-control" type="text" name="name" value="<%= status %>"
-                              required />
+                           <label for="state">Estado</label>
+                           <select name="state" id="state">
+                              <!-- Inicio de la fila  -->
+                              <% status.map( (statuses)=> { %>
+                                 <option value=<%=statuses.id%>>
+                                    <%= statuses.status_name%>
+                                 </option>
+                                 <% }); %>
+                           </select>
                         </div>
                         <button class="btn btn-primary" type="submit">
                            Actualizar

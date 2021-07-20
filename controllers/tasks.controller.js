@@ -1,25 +1,26 @@
 
 const { getCategoriesByUser } = require('../services/category.service');
 const {getStatusByUser } = require('../services/status.service');
-const { createdTask, getTaskByUser,getTaskById } = require('../services/task.service');
+const { createdTask, getTaskByUser,getTaskById,updateTask } = require('../services/task.service');
 
 
 
 const renderEditTask = async(req,res) => {
    try {
-      const { firstname, lastname} = req.user;
+      const { id: userId,firstname, lastname} = req.user;
       let {id} = req.params;
       let username = `${firstname} ${lastname}`;
+      let categories = await getCategoriesByUser( userId );
+      let status = await getStatusByUser( userId );
       let task = await getTaskById(id);
-
       return res.render("pages/edit-task", { 
          id,
          title:'Editar tareas', 
          username,
+         categories,
+         status,
          titleTask: task.title,
          description: task.description,
-         category: task.category_id,
-         status: task.status_id
       }); 
    } catch (error) {
       throw new Error(error)
@@ -45,7 +46,6 @@ const renderTask = async(req, res) => {
             }            
          }
       }
-
       for (let i = 0; i < task.length; i++) {
          const element = task[i];
          for (let x = 0; x < status.length; x++) {
@@ -81,9 +81,22 @@ const createTask = async( req, res ) => {
    }
 };
 
+const update = async( req, res) => {
+   try {
+      const { id: idTask } = req.params;
+      const { title, description, categories, state} = req.body;
+      console.log( ">>>>>>>>>>>>>>>>>"+ categories, state );
+      await updateTask({ idTask, title, description, category:categories, status:state });
+      res.redirect("/tareas");
+   } catch (error) {
+      throw new Error(error.stack);
+   }
+}
+
 
 module.exports = {
    renderTask,
    createTask,
-   renderEditTask
+   renderEditTask,
+   update
 }
