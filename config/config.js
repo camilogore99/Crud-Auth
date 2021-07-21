@@ -1,3 +1,4 @@
+// hacemos la impotacion para poder traer las variables de entorno con el require("dotenv").config();  // 
 require("dotenv").config();
 
 module.exports = {
@@ -9,7 +10,7 @@ module.exports = {
       dialect: "postgres",
       define: {
          createdAt: 'created_at',
-         updatedAt: 'updated_at'
+         updatedAt: 'updated_at',
       }
    },
    test: {
@@ -20,7 +21,7 @@ module.exports = {
       dialect: "postgres",
       define: {
          createdAt: 'created_at',
-         updatedAt: 'updated_at'
+         updatedAt: 'updated_at',
       }
    },
    production: {
@@ -28,6 +29,6 @@ module.exports = {
       password: null,
       database: "database_production",
       host: "127.0.0.1",
-      dialect: "mysql"
-   }
-}
+      dialect: "mysql",
+   },
+};

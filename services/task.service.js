@@ -14,6 +14,7 @@ const createdTask = async( { title, description, userId,categoryId,status } ) =>
       throw new Error(error)
    }
 };
+
 const getTaskByUser = async( userId ) => {
    try {
       let tasks = await Task.findAll({ 
@@ -37,25 +38,41 @@ const getTaskById = async(id) => {
    }
 }
 
-const updateTask = async( {idTask, title, description, category, status } ) => {
+const updateTask = async( {idTask, titleTask, descriptionTask, categoryTask, statusTask}  ) => {
    try {
-      let task = await Task.update(
-         { title: title },
-         { description: description },
-         { category_id: category },
-         { status_id: status },
-         { where: { id: idTask }}
-      );
+      let values = {
+         title: titleTask,
+         description: descriptionTask,
+         category_id: categoryTask,
+         status_id: statusTask,
+      }
+      let condition = {
+         where:{id:idTask}
+      }
+      options = {multi: true}
+      let task = await Task.update(values, condition, options);
       return task;
    } catch (error) {
       throw new Error(error)
    }
 }
-
+const deleteTask = async(idTask) => {
+   try {
+      const reslutDelete = await Task.destroy({
+         where: {
+            id: idTask
+         }
+      })
+      return reslutDelete
+   } catch (error) {
+      throw new Error(error)
+   }
+};
 
 module.exports = {
    createdTask,
    getTaskByUser,
    getTaskById,
-   updateTask
+   updateTask,
+   deleteTask
 }

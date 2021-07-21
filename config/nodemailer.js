@@ -1,3 +1,4 @@
+
 // Nos va ayudar a poder enviar correos electronicos 
 const nodemailer = require('nodemailer');
 // nos permitir usar nuestra cuenta de google para poder enviar correos 
@@ -42,7 +43,6 @@ const createTrasporter = async() => {
 
       return transpoterSendgrid;
    } catch (error) {
-      
       throw new Error(error)
    }
 }
