@@ -18,6 +18,7 @@ authRouter.get( '/auth/google/callback', authController.googleCallback );
 authRouter.get( '/auth/facebook/callback', authController.facebookCallback );
 
 //Restablecer la contraseña 
-authRouter.post('/auth/reset-password', authController.resetPassword)
+authRouter.get('/auth/reset-password', authController.renderPageResetPassword);
+authRouter.post('/auth/reset-password', authController.resetPassword);
 
 module.exports = authRouter;

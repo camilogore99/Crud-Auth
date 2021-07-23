@@ -2,22 +2,29 @@
    <%- include('../template/nav') -%>
       <div class="bg-register">
          <div class="container">
+            <h2 class="text-center color-white title-welcome-back">Bienvenido de vuelta!</h2>
             <div class="row">
-               <h2 class="text-center">Iniciar Sesión</h2>
+               <h2 class="text-center color-white">Iniciar Sesión</h2>
             </div>
             <div class="row justify-content-center">
                <div class="col-6 reg-form-area">
                   <form action="/login" method="POST">
                      <div class="mb-3">
-                        <label for="firstname">Correo Eléctronico</label>
+                        <label for="email">Correo Eléctronico</label>
                         <input id="email" class="form-control" type="email" name="email" required>
                      </div>
                      <div class="mb-3">
-                        <label for="lastname">Contraseña</label>
-                        <input class="form-control" type="password" name="password" required>
+                        <label for="password">Contraseña</label>
+                        <input id="password" class="form-control" type="password" name="password" required>
                      </div>
                      <button class="btn btn-primary" type="submit">Enviar</button>
                   </form>
+                  <div class="mt-4">
+                     <h6>¿Aún no tienes una cuenta? <a href="/register">Registrate</a></h6>
+                  </div>
+                  <div class="mt-2">
+                     <a href="/auth/reset-password">¿Olvidaste tu contraseña?</a>
+                  </div>
                </div>
                <div class="col-3">
                   <a class="btn btn-light custom-gbtn" href='/auth/google'>

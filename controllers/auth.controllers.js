@@ -66,7 +66,9 @@ const facebookCallback = passport.authenticate("facebook",{
 // Obteniendo los datos para restablecer la contraseña //
 const resetPassword = async(req, res,next) =>{
    try {
-      const { email } = req.body;
+      let { email } = req.body;
+      console.log(req.body);
+      console.log("si entro a la funcion y este es el correo >>>"+email);
       // El objeto emailOptions es el que traemos de config/nodmailer al cual es el cuerpo para el envio del correo 
       emailOptions.to = email;// va dirigido hacia el cliente 
       emailOptions.subject = "Restablecimiento de contraseña ";
@@ -75,11 +77,21 @@ const resetPassword = async(req, res,next) =>{
       emailOptions.html = template;
       await sendMail(emailOptions);
       // enviamos el mensaje al cliente que el correo se envio correctamente 
+      res.redirect("/login")
       res.send(`se a enviado la solicitud al correo ${email} `);
    } catch (error) {
       next(error);
    };
 };
+
+
+// Renderizamos la pagina para restablecer la contraseña // 
+const renderPageResetPassword = async(req, res) => {
+   res.render("pages/restore-password",{
+      title:"Restablecer contraseña"
+   });
+};
+
 
 // Exportaciones //
 module.exports = {
@@ -92,5 +104,6 @@ module.exports = {
    passportFBStrategy,
    googleCallback,
    facebookCallback,
-   resetPassword
+   resetPassword,
+   renderPageResetPassword
 }
