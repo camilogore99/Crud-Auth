@@ -36,13 +36,19 @@ main {
   height: 100vh;
 }
 .bg-register {
-  background-color: #160e4e;
-  height: 85vh;
+  min-height: 85vh;
   padding: 20px 0px;
 }
 
 .bg-register h2 {
   margin-bottom: 20px;
+}
+.login-postion {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .reg-form-area {
@@ -64,15 +70,18 @@ footer {
   justify-content: flex-end;
   column-gap: 4%;
 }
-
+.bg-color-ui {
+  background-color: #4723d9;
+}
 .main-container {
-  background-color: #edf0f7;
   width: 100%;
   max-width: 100%;
+  overflow: scroll;
 }
 
 .d-title {
-  background-color: #fff;
+  text-align: center;
+  background-color: mediumslateblue;
   border-radius: 6px;
   padding: 13px 25px;
   margin-bottom: 20px;
@@ -83,13 +92,11 @@ footer {
 }
 
 .new-register {
-  background-color: #fff;
   border-radius: 6px;
   padding: 13px 25px;
 }
 
 .table-container {
-  background-color: #fff;
   padding: 20px;
 }
 
@@ -105,4 +112,10 @@ footer {
 }
 .color-white {
   color: white;
+}
+td {
+  font-size: larger;
+}
+.text-align {
+  text-align: center;
 }

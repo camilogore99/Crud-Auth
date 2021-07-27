@@ -60,11 +60,10 @@ const createdCat = async(req, res, next) => {
       // Hacemos el llamado a la funcion que crea la categoria // 
       await createCategory({ name, userId: id });
       // Redireccionamos a la pagina de categrias //
-      res.redirect('/categorias')
+      res.redirect('/categorias');
    } catch (error) {
       next(error);
    };
-
 };
 
 // Actualizacion de la categoria //

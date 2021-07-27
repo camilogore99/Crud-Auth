@@ -4,7 +4,7 @@
          <div class="d-flex p-3 main-container">
             <div class="container">
                <div class="row">
-                  <div class="d-title">
+                  <div class="d-title text-center">
                      <h2>Nueva Categoría</h2>
                   </div>
                </div>
@@ -12,7 +12,9 @@
                   <div class="col-12 new-register">
                      <form action="/categorias" method="POST">
                         <div class="mb-3">
-                           <label for="name">Nombre</label>
+                           <label for="name">
+                              <h5 class="text-center text-align color-white ">Nombre de la Categoría</h5>
+                           </label>
                            <input id="name" class="form-control" type="text" name="name" required />
                         </div>
                         <button class="btn btn-primary" type="submit">
@@ -27,7 +29,7 @@
                   </div>
                </div>
                <div class="row table-container">
-                  <table class="table table-striped">
+                  <table class="table table-dark table-striped">
                      <thead>
                         <tr>
                            <th scope="col">#</th>

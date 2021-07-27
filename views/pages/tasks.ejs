@@ -12,16 +12,23 @@
                   <div class="col-12 new-register">
                      <form action="/tareas" method="POST">
                         <div class="mb-3">
-                           <label for="title">Titulo</label>
+                           <label for="title">
+                              <h5 class="text-center text-align color-white ">Titulo</h5>
+                           </label>
                            <input id="title" class="form-control" type="text" name="title" required />
                         </div>
                         <div class="mb-3">
-                           <label for="description">Descripcion</label>
+                           <label for="description">
+                              <h5 class="text-center text-align color-white ">Descripcion</h5>
+                           </label>
                            <input id="description" class="form-control" type="text" name="description" required />
                         </div>
                         <div class="mb-3">
-                           <label for="categories">Categoria</label>
-                           <select name="categories" id="categories">
+                           <label for="categories">
+                              <h5 class="text-center text-align color-white ">Categoria</h5>
+                           </label>
+                           <select class="form-select" aria-label="Default select example" name="categories"
+                              id="categories">
                               <!-- Inicio de la fila  -->
                               <% categories.map( (category)=> { %>
                                  <option value=<%=category.id%>>
@@ -31,8 +38,10 @@
                            </select>
                         </div>
                         <div class="mb-3">
-                           <label for="state">Estado</label>
-                           <select name="state" id="state">
+                           <label for="state">
+                              <h5 class="text-center text-align color-white ">Estado</h5>
+                           </label>
+                           <select class="form-select" aria-label="Default select example" name="state" id="state">
                               <!-- Inicio de la fila  -->
                               <% status.map( (statuses)=> { %>
                                  <option value=<%=statuses.id%>>
@@ -53,7 +62,7 @@
                   </div>
                </div>
                <div class="row table-container">
-                  <table class="table table-striped">
+                  <table class="table table-dark table-striped">
                      <thead>
                         <tr>
                            <th scope="col">#</th>
