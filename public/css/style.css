@@ -3,6 +3,7 @@ html {
 }
 
 body {
+  color: #fff;
   min-height: 100vh;
   min-height: -webkit-fill-available;
 }
@@ -13,23 +14,44 @@ body {
 .title-welcome-back {
   font-size: 46px;
 }
+label {
+  color: white;
+}
+.color-links {
+  color: teal;
+  font-weight: 600;
+  font-size: larger;
+}
+.font-label {
+  font-weight: 700;
+  font-size: larger;
+}
+
+/*
+// ======================================================== // ====================================== //
+*/
+/*
+Home 
+*/
+.main-home {
+  background-image: url("../assets/img/mejores-practicas-diseno-web-es-1024x512.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.nav-link {
+  color: #fff;
+}
 
 main {
   display: flex;
   flex-wrap: nowrap;
-  height: 100vh;
+  min-height: 100vh;
   max-height: 100vh;
   overflow-x: auto;
   overflow-y: hidden;
 }
 .btn {
-  border-radius: 30px;
-}
-.nav-link {
-  color: #fff;
-}
-.navbar {
-  background-color: #1d224c;
+  border-radius: 8px;
 }
 .background-web-taskit {
   background-color: #160e4e;
@@ -43,24 +65,9 @@ main {
 .bg-register h2 {
   margin-bottom: 20px;
 }
-.login-postion {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.reg-form-area {
-  min-height: 30vh;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 1px 1px 6px #8a8484;
-}
 
 footer {
-  padding: 20px 0px;
+  padding: 15px 0px;
   background-color: #222;
   color: #fff;
 }
@@ -76,7 +83,6 @@ footer {
 .main-container {
   width: 100%;
   max-width: 100%;
-  overflow: scroll;
 }
 
 .d-title {
@@ -110,6 +116,9 @@ footer {
 .justify-contente-space-between {
   justify-content: space-between;
 }
+.align-items-center {
+  align-items: center;
+}
 .color-white {
   color: white;
 }
@@ -119,3 +128,60 @@ td {
 .text-align {
   text-align: center;
 }
+.lead {
+  text-align: center;
+}
+h1 {
+  text-align: center;
+}
+
+/*
+   Home 
+   */
+/*
+// ======================================================== // ====================================== //
+*/
+
+/*
+   Login
+*/
+.color-bg-input {
+  background-color: gray;
+  color: #fff;
+}
+.main-login {
+  background-color: #181b32;
+  /* background: linear-gradient(190deg, #2f1fa6, #37a7df); */
+}
+
+.login-postion {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.reg-form-area {
+  min-height: 30vh;
+  padding: 10px;
+}
+
+/*
+   Login
+*/
+/*
+// ======================================================== // ====================================== //
+*/
+/*
+ Categories
+*/
+.main-viwes-style {
+  scroll-behavior: smooth;
+  min-height: 100vh;
+  background-color: #25292e;
+}
+
+/*
+ Categories
+*/

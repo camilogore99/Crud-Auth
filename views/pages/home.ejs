@@ -1,9 +1,7 @@
 <%- include('../template/head') -%>
-
-
-   <div class="d-flex  h-100 text-center text-white bg-dark">
-      <div class="cover-container mt-4 d-flex w-100 h-100 p-3 mx-auto flex-column">
-         <header class="mb-auto mt-4">
+   <div class="main-home ">
+      <div class=" container d-flex mx-auto flex-column">
+         <div class="mb-auto mt-4">
             <div>
                <h3 class="float-md-start mb-0">Taskit</h3>
                <nav class="nav nav-masthead justify-content-center float-md-end">
@@ -12,17 +10,24 @@
                   <a class="nav-link" href="/registro">Register</a>
                </nav>
             </div>
-         </header>
-
+         </div>
          <main class="px-3 mt-4">
-            <h1>Cover your page.</h1>
-            <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download,
-               edit the
-               text, and add your own fullscreen background photo to make it your own.</p>
-            <p class="lead mt-4">
-               <a href="/registro" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Empezar</a>
-            </p>
+            <div class="container">
+               <div class="row">
+                  <div class="col-11 d-flex align-items-center flex-column justify-content-center col-md-5">
+                     <h1>Keep the order of your Tasks.</h1>
+                     <p class="lead">with us you can sort your tasks by categories, and add custom statuses to them so
+                        that you achieve your goals with the
+                        greatest possible order
+                        .</p>
+                     <p class="lead mt-4">
+                        <a href="/registro" class="btn btn-lg btn-secondary  fw-bold border-white bg-white">Empezar</a>
+                     </p>
+                  </div>
+                  <div class="col-1 col-md-7"></div>
+               </div>
+            </div>
          </main>
       </div>
+      <%- include('../template/footer') -%>
    </div>
-   <%- include('../template/footer') -%>

@@ -1,68 +1,84 @@
 <%- include('../template/head') -%>
-   <main>
-      <%- include('../template/sidebar') -%>
-         <div class="d-flex p-3 main-container">
-            <div class="container">
-               <div class="row">
-                  <div class="d-title text-center">
-                     <h2>Nueva Categoría</h2>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-12 new-register">
-                     <form action="/categorias" method="POST">
-                        <div class="mb-3">
-                           <label for="name">
-                              <h5 class="text-center text-align color-white ">Nombre de la Categoría</h5>
-                           </label>
-                           <input id="name" class="form-control" type="text" name="name" required />
+   <div class="main-viwes-style">
+      <div class="container">
+         <%- include('../template/nav') -%>
+            <main>
+               <div class="d-flex p-3 main-container">
+                  <div class="container">
+                     <div class="row">
+                        <div class="mb-auto d-flex justify-content-center mt-4">
+                           <div>
+                              <nav class="nav nav-masthead justify-content-center float-md-end">
+                                 <a class="nav-link active" aria-current="page" href="/categorias">categories</a>
+                                 <a class="nav-link" href="/estatus">Status</a>
+                                 <a class="nav-link" href="/tareas">Tasks</a>
+                              </nav>
+                           </div>
                         </div>
-                        <button class="btn btn-primary" type="submit">
-                           Guardar
-                        </button>
-                     </form>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="d-title mt-4">
-                     <h2>Categorías</h2>
-                  </div>
-               </div>
-               <div class="row table-container">
-                  <table class="table table-dark table-striped">
-                     <thead>
-                        <tr>
-                           <th scope="col">#</th>
-                           <th scope="col">Nombre</th>
-                           <th scope="col">Acciones</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        <!-- Inicio de la fila  -->
-                        <% categories.forEach( (category,i)=> { %>
-                           <tr>
-                              <th scope="row">
-                                 <%= i+1 %>
-                              </th>
-                              <td>
-                                 <%= category.name %>
-                              </td>
-                              <td>
-                                 <a href="/categorias/editar/<%= category.id %>" class="btn btn-outline-warning">
-                                    <i class="bi bi-pencil"></i>
-                                 </a>
+                     </div>
+                     <div class="row mt-4">
+                        <div class="d-title text-center">
+                           <h2>Nueva Categoría</h2>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="col-12 new-register">
+                           <form action="/categorias" method="POST">
+                              <div class="mb-3">
+                                 <label for="name">
+                                    <h5 class="text-center text-align color-white ">Nombre de la Categoría</h5>
+                                 </label>
+                                 <input id="name" class="form-control color-bg-input" type="text" name="name"
+                                    required />
+                              </div>
+                              <button class="btn btn-primary" type="submit">
+                                 Guardar
+                              </button>
+                           </form>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="d-title mt-4">
+                           <h2>Categorías</h2>
+                        </div>
+                     </div>
+                     <div class="row table-container">
+                        <table class="table table-dark table-striped">
+                           <thead>
+                              <tr>
+                                 <th scope="col">#</th>
+                                 <th scope="col">Nombre</th>
+                                 <th scope="col">Acciones</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <!-- Inicio de la fila  -->
+                              <% categories.forEach( (category,i)=> { %>
+                                 <tr>
+                                    <th scope="row">
+                                       <%= i+1 %>
+                                    </th>
+                                    <td>
+                                       <%= category.name %>
+                                    </td>
+                                    <td>
+                                       <a href="/categorias/editar/<%= category.id %>" class="btn btn-outline-warning">
+                                          <i class="bi bi-pencil"></i>
+                                       </a>
 
-                                 <a href="/categorias/borrar/<%= category.id %>" class="btn btn-outline-danger">
-                                    <i class="bi bi-trash"></i>
-                                 </a>
-                              </td>
-                           </tr>
-                           <% }); %>
-                              <!-- Fin de la fila  -->
-                     </tbody>
-                  </table>
+                                       <a href="/categorias/borrar/<%= category.id %>" class="btn btn-outline-danger">
+                                          <i class="bi bi-trash"></i>
+                                       </a>
+                                    </td>
+                                 </tr>
+                                 <% }); %>
+                                    <!-- Fin de la fila  -->
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
                </div>
-            </div>
-         </div>
-   </main>
+            </main>
+      </div>
+   </div>
    <%- include('../template/footer-auth') -%>

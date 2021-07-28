@@ -1,118 +1,137 @@
 <%- include('../template/head') -%>
-   <main>
-      <%- include('../template/sidebar') -%>
-         <div class="d-flex p-3 main-container">
-            <div class="container">
-               <div class="row">
-                  <div class="d-title">
-                     <h2>Nueva Tarea</h2>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-12 new-register">
-                     <form action="/tareas" method="POST">
-                        <div class="mb-3">
-                           <label for="title">
-                              <h5 class="text-center text-align color-white ">Titulo</h5>
-                           </label>
-                           <input id="title" class="form-control" type="text" name="title" required />
+   <div class="main-viwes-style">
+      <div class="conatiner">
+         <%- include('../template/nav') -%>
+            <main>
+               <div class="d-flex p-3 main-container">
+                  <div class="container">
+                     <div class="row">
+                        <div class="mb-auto d-flex justify-content-center mt-4">
+                           <div>
+                              <nav class="nav nav-masthead justify-content-center float-md-end">
+                                 <a class="nav-link active" aria-current="page" href="/categorias">categories</a>
+                                 <a class="nav-link" href="/estatus">Status</a>
+                                 <a class="nav-link" href="/tareas">Tasks</a>
+                              </nav>
+                           </div>
                         </div>
-                        <div class="mb-3">
-                           <label for="description">
-                              <h5 class="text-center text-align color-white ">Descripcion</h5>
-                           </label>
-                           <input id="description" class="form-control" type="text" name="description" required />
+                     </div>
+                     <div class="row mt-4">
+                        <div class="d-title">
+                           <h2>Nueva Tarea</h2>
                         </div>
-                        <div class="mb-3">
-                           <label for="categories">
-                              <h5 class="text-center text-align color-white ">Categoria</h5>
-                           </label>
-                           <select class="form-select" aria-label="Default select example" name="categories"
-                              id="categories">
+                     </div>
+                     <div class="row">
+                        <div class="col-12 new-register">
+                           <form action="/tareas" method="POST">
+                              <div class="mb-3">
+                                 <label for="title">
+                                    <h5 class="text-center text-align color-white ">Titulo</h5>
+                                 </label>
+                                 <input id="title" class="form-control color-bg-input" type="text" name="title"
+                                    required />
+                              </div>
+                              <div class="mb-3">
+                                 <label for="description">
+                                    <h5 class="text-center text-align color-white ">Descripcion</h5>
+                                 </label>
+                                 <input id="description" class="form-control color-bg-input" type="text"
+                                    name="description" required />
+                              </div>
+                              <div class="mb-3">
+                                 <label for="categories">
+                                    <h5 class="text-center text-align color-white ">Categoria</h5>
+                                 </label>
+                                 <select class="form-select color-bg-input" aria-label="Default select example"
+                                    name="categories" id="categories">
+                                    <!-- Inicio de la fila  -->
+                                    <% categories.map( (category)=> { %>
+                                       <option value=<%=category.id%>>
+                                          <%= category.name%>
+                                       </option>
+                                       <% }); %>
+                                 </select>
+                              </div>
+                              <div class="mb-3">
+                                 <label for="state">
+                                    <h5 class="text-center text-align color-white ">Estado</h5>
+                                 </label>
+                                 <select class="form-select color-bg-input" aria-label="Default select example"
+                                    name="state" id="state">
+                                    <!-- Inicio de la fila  -->
+                                    <% status.map( (statuses)=> { %>
+                                       <option value=<%=statuses.id%>>
+                                          <%= statuses.status_name%>
+                                       </option>
+                                       <% }); %>
+                                 </select>
+                              </div>
+                              <button class="btn btn-primary" type="submit">
+                                 Crear Tarea
+                              </button>
+                           </form>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="d-title mt-4">
+                           <h2>Tareas</h2>
+                        </div>
+                     </div>
+                     <div class="row table-container">
+                        <table class="table table-dark table-striped">
+                           <thead>
+                              <tr>
+                                 <th scope="col">#</th>
+                                 <th scope="col">titulo</th>
+                                 <th scope="col">Descripcion</th>
+                                 <th scope="col">Categoria</th>
+                                 <th scope="col">Estado</th>
+                                 <th scope="col">Completada</th>
+                                 <th scope="col">Acciones</th>
+                              </tr>
+                           </thead>
+                           <tbody>
                               <!-- Inicio de la fila  -->
-                              <% categories.map( (category)=> { %>
-                                 <option value=<%=category.id%>>
-                                    <%= category.name%>
-                                 </option>
+                              <% task.forEach( (tasks, i)=> { %>
+                                 <tr>
+                                    <th scope="row">
+                                       <%= i+1 %>
+                                    </th>
+                                    <td>
+                                       <%= tasks.title %>
+                                    </td>
+                                    <td>
+                                       <%= tasks.description %>
+                                    </td>
+
+                                    <td>
+                                       <%= arrCat[i] %>
+                                    </td>
+                                    <td>
+                                       <%= arrStatus[i] %>
+                                    </td>
+                                    <td>
+                                       <%= tasks.completed %>
+                                    </td>
+                                    <td>
+                                       <a href="/task/editar/<%= tasks.id %>" class="btn btn-outline-warning">
+                                          <i class="bi bi-pencil"></i>
+                                       </a>
+
+                                       <a href="/task/borrar/<%= tasks.id %>" class="btn btn-outline-danger">
+                                          <i class="bi bi-trash"></i>
+                                       </a>
+                                    </td>
+                                 </tr>
                                  <% }); %>
-                           </select>
-                        </div>
-                        <div class="mb-3">
-                           <label for="state">
-                              <h5 class="text-center text-align color-white ">Estado</h5>
-                           </label>
-                           <select class="form-select" aria-label="Default select example" name="state" id="state">
-                              <!-- Inicio de la fila  -->
-                              <% status.map( (statuses)=> { %>
-                                 <option value=<%=statuses.id%>>
-                                    <%= statuses.status_name%>
-                                 </option>
-                                 <% }); %>
-                           </select>
-                        </div>
-                        <button class="btn btn-primary" type="submit">
-                           Crear Tarea
-                        </button>
-                     </form>
+                                    <!-- Fin de la fila  -->
+                           </tbody>
+                        </table>
+                     </div>
                   </div>
                </div>
-               <div class="row">
-                  <div class="d-title mt-4">
-                     <h2>Tareas</h2>
-                  </div>
-               </div>
-               <div class="row table-container">
-                  <table class="table table-dark table-striped">
-                     <thead>
-                        <tr>
-                           <th scope="col">#</th>
-                           <th scope="col">titulo</th>
-                           <th scope="col">Descripcion</th>
-                           <th scope="col">Categoria</th>
-                           <th scope="col">Estado</th>
-                           <th scope="col">Completada</th>
-                           <th scope="col">Acciones</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        <!-- Inicio de la fila  -->
-                        <% task.forEach( (tasks, i)=> { %>
-                           <tr>
-                              <th scope="row">
-                                 <%= i+1 %>
-                              </th>
-                              <td>
-                                 <%= tasks.title %>
-                              </td>
-                              <td>
-                                 <%= tasks.description %>
-                              </td>
+            </main>
+      </div>
+   </div>
 
-                              <td>
-                                 <%= arrCat[i] %>
-                              </td>
-                              <td>
-                                 <%= arrStatus[i] %>
-                              </td>
-                              <td>
-                                 <%= tasks.completed %>
-                              </td>
-                              <td>
-                                 <a href="/task/editar/<%= tasks.id %>" class="btn btn-outline-warning">
-                                    <i class="bi bi-pencil"></i>
-                                 </a>
-
-                                 <a href="/task/borrar/<%= tasks.id %>" class="btn btn-outline-danger">
-                                    <i class="bi bi-trash"></i>
-                                 </a>
-                              </td>
-                           </tr>
-                           <% }); %>
-                              <!-- Fin de la fila  -->
-                     </tbody>
-                  </table>
-               </div>
-            </div>
-         </div>
-   </main>
    <%- include('../template/footer-auth') -%>
