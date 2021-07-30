@@ -23,7 +23,7 @@ const register = async( request, response ) => {
       await newUser({ firstname, lastname, email, password });
       response.redirect("/registro");
    }catch(error){
-      next(error);
+      throw new Error(error.stack);
    };
 };
 
@@ -38,7 +38,6 @@ const localAuthStrategy = passport.authenticate("local", {
    failureRedirect: '/login',
    successRedirect: '/categorias'
 });
-
 
 const passportGoogleStrategy = passport.authenticate("google",{
    session: true,
@@ -67,8 +66,6 @@ const facebookCallback = passport.authenticate("facebook",{
 const resetPassword = async(req, res,next) =>{
    try {
       let { email } = req.body;
-      console.log(req.body);
-      console.log("si entro a la funcion y este es el correo >>>"+email);
       // El objeto emailOptions es el que traemos de config/nodmailer al cual es el cuerpo para el envio del correo 
       emailOptions.to = email;// va dirigido hacia el cliente 
       emailOptions.subject = "Restablecimiento de contraseña ";
@@ -80,7 +77,7 @@ const resetPassword = async(req, res,next) =>{
       res.redirect("/login")
       res.send(`se a enviado la solicitud al correo ${email} `);
    } catch (error) {
-      next(error);
+      throw new Error(error)
    };
 };
 

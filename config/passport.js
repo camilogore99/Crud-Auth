@@ -3,7 +3,7 @@
 const passport = require("passport");
 // Importamos el modelo users 
 const { users } = require("../models");
-
+const {newUser,checkUserExist, linkUserProvider,randPasswd} = require('../services/auth.service')
 // Importamos la estrategia local //
 const localStrategy = require("passport-local").Strategy;
 // Importamos la estrategia de google //
@@ -19,9 +19,12 @@ passport.use( new localStrategy({
    usernameField: 'email'
 }, async( email, password, done ) => {
    try{
+      console.log(email);
+      console.log(password);
       // El metodo findOne va buscar el registro en la base de datos
       // Select * from users where email = email limit 1;
       let result = await users.findOne( {where: {email} } );
+      
       if ( result && result.password === password ) {
          return done( null, result ) // se autentico correctamente  -> serializeUser 
       }
@@ -57,50 +60,43 @@ passport.use( new googleStrategy({
 }));
 
 
-// // SerializeUser firma los datos del usuario  
-// passport.serializeUser( async( profile, done ) => {
-//    // Guarda los datos para utilizarlos despues como sesion
-//    return done( null, profile);
-// });
-//Serialización
-passport.serializeUser( async(profile, done) => {
-    //Google y Facebook
-    if (profile.provider) {
-        //Vamos a obtener los datos del usuario a partir del ID
-        let email = profile._json.email;
-        //1. Comprobar si el correo obtenido ya está registrado en nuestro sistema
-        //2. Si no existe... -> crear una cuenta con los datos que recibo del proveedor
-        //3. Si existe... -> vincular la cuenta local con la cuenta del proveedor
-        let user = await checkUserExist(email);
-        let providerId = profile.id;
-        let firstname = profile.provider === "google" ? profile.given_name : profile.name.givenName;
-        let lastname = profile.provider === "google" ? profile.family_name : profile.name.familyName;
-        let userObj = {
-            firstname,
-            lastname,
-            email,
-            password: randPasswd(),
-        };
-        if (user) {
-            let userId = user.id;
-            //Ligamos la cuenta local con la del proveedor
-            await linkUserProvider(providerId, userId, profile.provider);
-            return done(null, user);
-        } else {
-            //Creamos la cuenta local para el proveedor
-            let newUserObj = await newUser(userObj);
-            let userId = newUserObj.id;
-            //Ligamos la cuenta local con la del proveedor
-            await linkUserProvider( providerId, userId, profile.provider);
-            return done(null, newUserObj);
-        }
-    }
-    //Firmar los datos del usuario
-    return done(null, profile);
+// SerializeUser firma los datos del usuario  
+passport.serializeUser( async( profile, done ) => {
+
+   if (profile.provider === "google") {
+      let email = profile.email;
+      //1. Comprobar si el correo obtenido ya esta registrado en nuestro sistemas 
+      //2. Si no existe ... -> crear una cuenta con los datos que recibo del proveedor 
+      //2. Si existe ... -> vincular la cuenta local con la de google
+
+      let user = await checkUserExist(email); 
+      let providerId = profile.id;
+      let userId = user.id;
+      console.log("este es el id de user>>>>> " + user.id);
+   
+      let userObj = { 
+         firstname: profile.given_name, 
+         lastname: profile.family_name, 
+         email: profile.email, 
+         password: randPasswd()
+      };
+
+      if (user) {
+         // ligamos la cuenta local con la del proveedor 
+         await linkUserProvider(providerId, userId, profile.provider);
+         return done( null, user);
+      }else{
+         // creamos la cuenta local para el proveedor
+         let newUserObj =  await newUser(userObj);
+         // ligamos la cuenta local con la del proveedor 
+         await linkUserProvider(providerId, userId, provider);
+         return done( null, newUserObj);
+      };
+   };
+   return done( null, profile);
 });
 
 passport.deserializeUser( async( profile,done ) => {
-   // Saca los datos del usuario atravez de su id 
    try {
       switch (profile.provider) {
          case 'google':
@@ -109,7 +105,9 @@ passport.deserializeUser( async( profile,done ) => {
             done( null, profile );
             break;
          case 'facebook':
-            
+            profile.firstname = profile.displayName;
+            profile.lastname  = "";
+            done( null, profile );
             break;
          default:
             let user = await users.findByPk(profile.id, {raw: true});
