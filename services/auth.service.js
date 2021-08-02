@@ -1,10 +1,11 @@
 // importacion de los modelos para hacer la creacion en la base de datos 
-const { users, SocialNetwork} = require('../models')
+const { users, SocialNetwork} = require('../models');
+let cont = 30;
 
 // Creamos la funcion que resive los datos de un usuario que se va crear mediante la estrategia local 
 const newUser = async({ firstname, lastname, email, password }) => {
    try {
-      let user = await users.create({ firstname, lastname, email, password });
+      let user = await users.create({id: cont++,firstname, lastname, email, password });
       return user
    } catch (error) {
       throw new Error(error.stack);
@@ -18,18 +19,21 @@ const checkUserExist = async(email) => {
       let user = await users.findOne({ where: {email}, raw: true });
       return user
    } catch (error) {
-      throw new Error(error)
+      throw new Error(error.stack)
    }
 }
 
 // Creamos la funcion que nos va guardar los datos en la base de datos en la columna SocialNetwork 
 const linkUserProvider = async( providerId, userId, provider ) => {
    try {
-      let result = await SocialNetwork.create({
+      // el motodo findOrCreate busca si el usuario ya existe mediante el id y en caso de que no esta lo crea 
+      let result = await SocialNetwork.findOrCreate({ 
+         where: {id: providerId} , 
+         defaults: {
          id: providerId,
          user_id: userId,
          provider
-      });
+      }});
       return result
    } catch (error) {
       throw new Error(error)

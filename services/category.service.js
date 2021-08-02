@@ -32,11 +32,12 @@ const createCategory = async({name,userId}) => {
    };
 };
 
-const updateCategory = async({name, categoryId}) => {
+// Actualizacion de una Categoria 
+const updateCategory = async( { name, categoryId } ) => {
    try {
       let category = await Category.update(
-         { status_name: name },
-         {where: {id:categoryId}}
+         { name },
+         {where: {id: categoryId}}
       );
       return category;
    } catch (error) {

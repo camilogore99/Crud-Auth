@@ -25,10 +25,17 @@ module.exports = {
       }
    },
    production: {
-      username: "root",
-      password: null,
-      database: "database_production",
-      host: "127.0.0.1",
-      dialect: "mysql",
+      use_env_variable: 'DATABASE_URL',
+      dialect:"postgres",
+      define: {
+         createdAt: 'created_at',
+         updatedAt: 'updated_at',
+      },
+      dialectOptions: {
+         ssl: {
+            require: true,
+            rejectUnauthorized: false
+         }
+        }
    },
 };

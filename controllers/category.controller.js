@@ -72,6 +72,8 @@ const update = async (request, response, next) => {
        // Obtenemos los datos //
       let {id: categoryId} = request.params;
       let {name} = request.body;
+
+      
       // Hacemos el llamado de la funcion que nos actualiza las categorias //
       await updateCategory({ name, categoryId });
       // Redireccionamos hacia las categorias despues de actualizar //

@@ -6,6 +6,9 @@ module.exports = (sequelize, DataTypes) => {
   class SocialNetwork extends Model {
     static associate(models) {
       // define association here
+      SocialNetwork.belongsTo(models.users, {
+         foreignKey: 'user_id'
+      });
     }
   };
   SocialNetwork.init({

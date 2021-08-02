@@ -16,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
          users.hasMany(models.status,{
             foreignKey: 'created_by'
          })
+         users.hasMany(models.SocialNetwork,{
+            foreignKey: 'user_id'
+         })
       }
    };
   users.init({

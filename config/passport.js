@@ -1,5 +1,5 @@
 
-// Importamos 
+// Importaciones  
 const passport = require("passport");
 // Importamos el modelo users 
 const { users } = require("../models");
@@ -19,8 +19,6 @@ passport.use( new localStrategy({
    usernameField: 'email'
 }, async( email, password, done ) => {
    try{
-      console.log(email);
-      console.log(password);
       // El metodo findOne va buscar el registro en la base de datos
       // Select * from users where email = email limit 1;
       let result = await users.findOne( {where: {email} } );
@@ -44,7 +42,6 @@ passport.use(new FacebookStrategy({
   }
 ));
 
-
 // ====== ESTRATEGIA FACEBOOK  ====== // 
 
 // ====== ESTRATEGIA GOOGLE OAuth 2.0  ====== // 
@@ -62,34 +59,39 @@ passport.use( new googleStrategy({
 
 // SerializeUser firma los datos del usuario  
 passport.serializeUser( async( profile, done ) => {
-
-   if (profile.provider === "google") {
+   // La validacion sera para google y facebook 
+   
+   if (profile.provider) {
       let email = profile.email;
       //1. Comprobar si el correo obtenido ya esta registrado en nuestro sistemas 
       //2. Si no existe ... -> crear una cuenta con los datos que recibo del proveedor 
-      //2. Si existe ... -> vincular la cuenta local con la de google
-
-      let user = await checkUserExist(email); 
+      //2. Si existe ... -> vincular la cuenta local con la de google 
+      let user = await checkUserExist(email);
       let providerId = profile.id;
-      let userId = user.id;
-      console.log("este es el id de user>>>>> " + user.id);
-   
-      let userObj = { 
-         firstname: profile.given_name, 
-         lastname: profile.family_name, 
-         email: profile.email, 
-         password: randPasswd()
-      };
+      // objeto con el usuario de gooogle 
 
+      let firstname = profile.provider === "google" ? profile.given_name : profile.displayName;
+      let lastname = profile.provider === "google" ? profile.family_name : "null";
+
+      let userObj = { 
+         firstname, 
+         lastname, 
+         email: profile.email, 
+         password: "12345"
+      };
+      
       if (user) {
+         let userId = user.id;        
          // ligamos la cuenta local con la del proveedor 
          await linkUserProvider(providerId, userId, profile.provider);
+         // Regresamos la cuenta local 
          return done( null, user);
       }else{
          // creamos la cuenta local para el proveedor
          let newUserObj =  await newUser(userObj);
+         let userId = newUserObj.id;
          // ligamos la cuenta local con la del proveedor 
-         await linkUserProvider(providerId, userId, provider);
+         await linkUserProvider(providerId, userId, profile.provider);
          return done( null, newUserObj);
       };
    };
@@ -97,9 +99,11 @@ passport.serializeUser( async( profile, done ) => {
 });
 
 passport.deserializeUser( async( profile,done ) => {
+
    try {
       switch (profile.provider) {
          case 'google':
+            // generado por google 
             profile.firstname = profile.name.givenName;
             profile.lastname  = profile.name.familyName;
             done( null, profile );
@@ -116,5 +120,5 @@ passport.deserializeUser( async( profile,done ) => {
       }
    } catch (error) {
       done( error );
-   }
+   };
 });

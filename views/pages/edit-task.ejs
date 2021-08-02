@@ -1,59 +1,65 @@
 <%- include('../template/head') -%>
-   <main>
-      <%- include('../template/sidebar') -%>
-         <div class="d-flex p-3 main-container">
-            <div class="container">
-               <div class="row">
-                  <div class="d-title">
-                     <h2>Editar Tarea</h2>
+   <div class="main-viwes-style">
+      <div class="container">
+         <main>
+            <div class="d-flex p-3 main-container">
+               <div class="container">
+                  <div class="row">
+                     <div class="d-title">
+                        <h2>Editar Tarea</h2>
+                     </div>
                   </div>
-               </div>
-               <div class="row">
-                  <div class="col-12 new-register">
-                     <form action="/task/editar/<%=id%>" method="POST">
-                        <div class="mb-3">
-                           <label for="name">ID</label>
-                           <input class="form-control" type="text" value="<%= id %>" disabled />
-                        </div>
-                        <div class="mb-3">
-                           <label for="title">Titulo</label>
-                           <input id="title" class="form-control" type="text" name="title" value="<%=titleTask  %>"
-                              required />
-                        </div>
-                        <div class="mb-3">
-                           <label for="description">Descripcion</label>
-                           <input id="description" class="form-control" type="text" name="description"
-                              value="<%=description %>" required />
-                        </div>
-                        <div class="mb-3">
-                           <label for="categories">Categoria</label>
-                           <select name="categories" id="categories">
-                              <!-- Inicio de la fila  -->
-                              <% categories.map( (category)=> { %>
-                                 <option value=<%=category.id%>>
-                                    <%= category.name%>
-                                 </option>
-                                 <% }); %>
-                           </select>
-                        </div>
-                        <div class="mb-3">
-                           <label for="state">Estado</label>
-                           <select name="state" id="state">
-                              <!-- Inicio de la fila  -->
-                              <% status.map( (statuses)=> { %>
-                                 <option value=<%=statuses.id%>>
-                                    <%= statuses.status_name%>
-                                 </option>
-                                 <% }); %>
-                           </select>
-                        </div>
-                        <button class="btn btn-primary" type="submit">
-                           Actualizar
-                        </button>
-                     </form>
+                  <div class="row">
+                     <div class="col-12 new-register">
+                        <form action="/task/editar/<%=id%>" method="POST">
+                           <div class="mb-3">
+                              <label for="name">ID</label>
+                              <input class="form-control" type="text" value="<%= id %>" disabled />
+                           </div>
+                           <div class="mb-3">
+                              <label for="title">Titulo</label>
+                              <input id="title" class="form-control" type="text" name="title" value="<%=titleTask  %>"
+                                 required />
+                           </div>
+                           <div class="mb-3">
+                              <label for="description">Descripcion</label>
+                              <input id="description" class="form-control" type="text" name="description"
+                                 value="<%=description %>" required />
+                           </div>
+                           <div class="row">
+                              <div class="mb-3">
+                                 <label class="label-name-select" for="categories">Categoria</label>
+                                 <select name="categories" id="categories">
+                                    <!-- Inicio de la fila  -->
+                                    <% categories.map( (category)=> { %>
+                                       <option value=<%=category.id%>>
+                                          <%= category.name%>
+                                       </option>
+                                       <% }); %>
+                                 </select>
+                              </div>
+                              <div class="mb-3">
+                                 <label class="label-name-select" for="state">Estado</label>
+                                 <select name="state" id="state">
+                                    <!-- Inicio de la fila  -->
+                                    <% status.map( (statuses)=> { %>
+                                       <option value=<%=statuses.id%>>
+                                          <%= statuses.status_name%>
+                                       </option>
+                                       <% }); %>
+                                 </select>
+                              </div>
+
+                           </div>
+                           <button class="btn btn-primary" type="submit">
+                              Actualizar
+                           </button>
+                        </form>
+                     </div>
                   </div>
                </div>
             </div>
-         </div>
-   </main>
+         </main>
+      </div>
+   </div>
    <%- include('../template/footer-auth') -%>
