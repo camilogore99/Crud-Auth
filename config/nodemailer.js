@@ -43,9 +43,9 @@ const createTrasporter = async() => {
 
       return transpoterSendgrid;
    } catch (error) {
-      throw new Error(error)
-   }
-}
+      throw new Error(error);
+   };
+};
 
 const sendMail = async(options) => {
    try {

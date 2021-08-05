@@ -26,7 +26,6 @@ module.exports = {
    },
    production: {
       use_env_variable: 'DATABASE_URL',
-      dialect:"postgres",
       define: {
          createdAt: 'created_at',
          updatedAt: 'updated_at',
@@ -36,6 +35,6 @@ module.exports = {
             require: true,
             rejectUnauthorized: false
          }
-        }
+      }
    },
 };

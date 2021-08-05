@@ -4,4 +4,7 @@ module.exports = {
     await queryInterface.renameColumn('statuses','createdAt','created_at' );
     await queryInterface.renameColumn('statuses','updatedAt','updated_at' );
   },
+  down: async() => {
+
+  }
 };

@@ -11,4 +11,7 @@ module.exports = {
          defaultValue:true
       });
    },
+   down: async() => {
+
+  }
 };

@@ -6,7 +6,7 @@ const getAll = async(req, res, next) => {
       let users = await getUsers();
       res.json(users);
    } catch (error) {
-      next(error);
+      throw new Error(error)
    };
 };
 

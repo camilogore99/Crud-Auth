@@ -67,6 +67,8 @@ passport.serializeUser( async( profile, done ) => {
       //2. Si no existe ... -> crear una cuenta con los datos que recibo del proveedor 
       //2. Si existe ... -> vincular la cuenta local con la de google 
       let user = await checkUserExist(email);
+      console.log("aqui va el usuario -<-<-<-<-<-<");
+      console.log(user);
       let providerId = profile.id;
       // objeto con el usuario de gooogle 
 
@@ -88,6 +90,9 @@ passport.serializeUser( async( profile, done ) => {
          return done( null, user);
       }else{
          // creamos la cuenta local para el proveedor
+         console.log("no esta crado");
+         console.log("y este es el objeto >>>>");
+         console.log(userObj);
          let newUserObj =  await newUser(userObj);
          let userId = newUserObj.id;
          // ligamos la cuenta local con la del proveedor 
